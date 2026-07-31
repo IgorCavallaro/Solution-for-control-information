@@ -1,0 +1,11 @@
+# Configuração local com dados sensíveis — nunca commitar
+config.js
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp

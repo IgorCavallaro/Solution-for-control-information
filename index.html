@@ -249,6 +249,13 @@ tr:hover td{background:var(--app-off-white);}
     </div>
 
     <div class="card">
+      <h2>Médias do período</h2>
+      <p class="sub">Baseado no filtro aplicado acima.</p>
+      <div class="divider"></div>
+      <div class="grid-auto" id="medias-periodo"></div>
+    </div>
+
+    <div class="card">
       <h2>Total de pessoas por culto</h2>
       <div class="divider"></div>
       <div class="chart-card chart-card-large">
@@ -587,7 +594,30 @@ function renderGraficoDistribuicao(filtrados){
     </div>`;
 }
 
+function renderMediasPeriodo(filtrados){
+  const n = filtrados.length;
+  const media = campo => n>0 ? (filtrados.reduce((a,r)=>a+(r[campo]||0),0)/n) : 0;
+
+  const stats = [
+    ['Cultos no período', n],
+    ['Média de pessoas por culto', media('total').toFixed(1)],
+    ['Média de adultos por culto', media('adultos').toFixed(1)],
+    ['Média de crianças por culto', media('criancas').toFixed(1)],
+    ['Média de bebês por culto', media('bebes').toFixed(1)],
+    ['Média de visitantes por culto', media('visCulto').toFixed(1)],
+    ['Média de decisões por culto', media('decisoes').toFixed(1)],
+  ];
+
+  document.getElementById('medias-periodo').innerHTML = stats.map(([label,val])=>`
+    <div class="stat-card">
+      <div class="stat-num">${val}</div>
+      <div class="stat-label">${label}</div>
+    </div>
+  `).join('');
+}
+
 function renderGraficos(filtrados){
+  renderMediasPeriodo(filtrados);
   renderGraficoBarras(filtrados);
   renderGraficoDistribuicao(filtrados);
 }
